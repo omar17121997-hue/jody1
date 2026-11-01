@@ -323,7 +323,7 @@
 
   <div class="container">
 
-    <!-- Step 1: The Initial Question -->
+    <!-- Step 1 -->
     <div id="step-1" class="step active">
       <div class="icon-badge">🇦🇺</div>
       <h1>Hey Jody, Quick Question…</h1>
@@ -341,7 +341,7 @@
       <div id="no-joke" class="joke-box warning" style="display: none;"></div>
     </div>
 
-    <!-- Step 2: Time Selection -->
+    <!-- Step 2 -->
     <div id="step-2" class="step">
       <div class="icon-badge">⏰</div>
       <h2>What time suits best?</h2>
@@ -375,9 +375,242 @@
       </button>
     </div>
 
-    <!-- Step 3: Location Selection (Australia vs North Gaza mandatory) -->
+    <!-- Step 3 -->
     <div id="step-3" class="step">
       <div class="icon-badge">📍</div>
+      <h2>Where are we heading?</h2>
+      <p class="subtitle">Every option is on the table... kind of! 😅</p>
+
+      <div class="options-grid">
+        <div class="choice-card" onclick="pickLocation(this, 'sydney')">
+          <div class="card-icon">🏖️</div>
+          <div class="card-title">Sydney, NSW</div>
+        </div>
+        <div class="choice-card" onclick="pickLocation(this, 'melbourne')">
+          <div class="card-icon">☕</div>
+          <div class="card-title">Melbourne, VIC</div>
+        </div>
+        <div class="choice-card" onclick="pickLocation(this, 'outback')">
+          <div class="card-icon">🦘</div>
+          <div class="card-title">The Outback</div>
+        </div>
+        <div class="choice-card" id="card-north" onclick="pickLocation(this, 'north')">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">North Gaza</div>
+        </div>
+      </div>
+
+      <div id="place-joke-box" style="display: none;"></div>
+
+      <button id="step3-btn" class="btn btn-primary" style="display: none; margin-top: 15px;" onclick="nextStep(4)">
+        Next: The Food Menu 👉
+      </button>
+    </div>
+
+    <!-- Step 4 -->
+    <div id="step-4" class="step">
+      <div class="icon-badge">🌯</div>
+      <h2>What are we eating?</h2>
+      <p class="subtitle">A fair dinkum democratic choice... see what you pick 😋</p>
+
+      <div class="options-grid">
+        <div class="choice-card" onclick="pickFood(this, 'pie')">
+          <div class="card-icon">🥧</div>
+          <div class="card-title">Aussie Meat Pie</div>
+        </div>
+        <div class="choice-card" onclick="pickFood(this, 'vegemite')">
+          <div class="card-icon">🍞</div>
+          <div class="card-title">Vegemite Toast</div>
+        </div>
+        <div class="choice-card" onclick="pickFood(this, 'diet')">
+          <div class="card-icon">🥗</div>
+          <div class="card-title">Salad & Diet</div>
+        </div>
+        <div class="choice-card" id="card-shawarma" onclick="pickFood(this, 'shawarma')">
+          <div class="card-icon">🌯</div>
+          <div class="card-title">Double Shawarma 🔥</div>
+        </div>
+      </div>
+
+      <div id="food-joke-box" style="display: none;"></div>
+
+      <button id="step4-btn" class="btn btn-primary" style="display: none; margin-top: 15px;" onclick="nextStep(5)">
+        Lock In The Hangout 🎉
+      </button>
+    </div>
+
+    <!-- Step 5 -->
+    <div id="step-5" class="step">
+      <div class="icon-badge">🎉</div>
+      <h2>It's Officially Official!</h2>
+      <p class="subtitle" style="color: #fb7185; font-weight: 700; font-size: 1.1rem; margin-bottom: 18px;">
+        «Looking forward to catching up, Jody! ❤️»
+      </p>
+
+      <div class="info-summary-box">
+        <div class="info-item">
+          <div class="info-item-icon">📅</div>
+          <div class="info-item-text"><b>Date & Time:</b> Thursday, Nov 26 - 6:30 PM</div>
+        </div>
+        <div class="info-item">
+          <div class="info-item-icon">📍</div>
+          <div class="info-item-text"><b>Location:</b> Al-Shamal Restaurant (North Gaza)</div>
+        </div>
+        <div class="info-item">
+          <div class="info-item-icon">🌯</div>
+          <div class="info-item-text"><b>The Feed:</b> Legendary Double Shawarma with extra garlic sauce! 😋</div>
+        </div>
+      </div>
+
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px;">Countdown to our hangout ⏳</p>
+      <div class="countdown-grid">
+        <div class="count-box"><span id="days">00</span><label>Days</label></div>
+        <div class="count-box"><span id="hours">00</span><label>Hours</label></div>
+        <div class="count-box"><span id="minutes">00</span><label>Mins</label></div>
+        <div class="count-box"><span id="seconds">00</span><label>Secs</label></div>
+      </div>
+
+      <a href="https://wa.me/970598011080?text=Hey%20Omar%21%20Deal%20is%20officially%20sealed%21%20Count%20me%20in%20for%20our%20hangout%20and%20that%20legendary%20Shawarma%20in%20North%20Gaza%21%20%F0%9F%8C%AF%E2%9D%A4%EF%B8%8F%F0%9F%87%A6%F0%9F%87%BA" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+        💬 Confirm with Omar on WhatsApp ❤️
+      </a>
+
+      <a href="https://maps.app.goo.gl/8KeZAsqBZN2zq54N8" target="_blank" rel="noopener noreferrer" class="btn btn-map">
+        🗺️ View Al-Shamal Restaurant on Google Maps
+      </a>
+
+      <p style="margin-top: 20px; color: #f43f5e; font-weight: 800; font-size: 1.05rem;">
+        See you soon, Jody! — Omar ✨
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    function nextStep(stepNum) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById('step-' + stepNum);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      if (stepNum === 5) {
+        triggerLoveConfetti();
+      }
+    }
+
+    let noCount = 0;
+    const noMessages = [
+      "The button is running away, not me! 🏃‍♂️",
+      "Fair dinkum, you know you can't say no! 🇦🇺",
+      "Crikey! The button just resigned 🙃",
+      "Nice try, mate! Resistance is completely futile 😉"
+    ];
+    function handleNoClick() {
+      const btn = document.getElementById('no-btn');
+      const box = document.getElementById('no-joke');
+      const randomX = Math.floor(Math.random() * 160) - 80;
+      const randomY = Math.floor(Math.random() * 100) - 50;
+      btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+      box.style.display = 'block';
+      box.innerText = noMessages[noCount % noMessages.length];
+      noCount++;
+    }
+
+    function pickTime(card, time) {
+      document.querySelectorAll('#step-2 .choice-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+    }
+
+    function pickLocation(card, loc) {
+      const jokeBox = document.getElementById('place-joke-box');
+      const nextBtn = document.getElementById('step3-btn');
+      document.querySelectorAll('#step-3 .choice-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      jokeBox.style.display = 'block';
+
+      if (loc === 'sydney') {
+        jokeBox.className = 'joke-box warning';
+        jokeBox.innerHTML = 'Sydney? Bondi traffic is a nightmare and parking costs an arm and a leg! 🚗❌ Pick somewhere better, mate.';
+        nextBtn.style.display = 'none';
+      } else if (loc === 'melbourne') {
+        jokeBox.className = 'joke-box warning';
+        jokeBox.innerHTML = 'Melbourne? It will rain, hail, and be sunny all in 5 minutes! 🌧️❌ Let’s head somewhere warmer.';
+        nextBtn.style.display = 'none';
+      } else if (loc === 'outback') {
+        jokeBox.className = 'joke-box warning';
+        jokeBox.innerHTML = 'The Outback? Way too many giant spiders, snakes, and heat waves! 🕷️❌ Try again.';
+        nextBtn.style.display = 'none';
+      } else if (loc === 'north') {
+        jokeBox.className = 'joke-box success';
+        jokeBox.innerHTML = 'And because we believe in 100% fair dinkum democracy... the destination has been chosen: <b>North Gaza (Al-Shamal Restaurant)! 🍽️✨</b>';
+        nextBtn.style.display = 'inline-flex';
+      }
+    }
+
+    function pickFood(card, food) {
+      const jokeBox = document.getElementById('food-joke-box');
+      const nextBtn = document.getElementById('step4-btn');
+      document.querySelectorAll('#step-4 .choice-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      jokeBox.style.display = 'block';
+
+      if (food === 'pie') {
+        jokeBox.className = 'joke-box warning';
+        jokeBox.innerHTML = 'Aussie Meat Pie? Good for the footy, but we deserve a real feast today! 🥧❌';
+        nextBtn.style.display = 'none';
+      } else if (food === 'vegemite') {
+        jokeBox.className = 'joke-box warning';
+        jokeBox.innerHTML = 'Vegemite on toast?! Mate, that is strictly for breakfast! 🍞❌ Let’s get real food.';
+        nextBtn.style.display = 'none';
+      } else if (food === 'diet') {
+        jokeBox.className = 'joke-box warning';
+        jokeBox.innerHTML = 'Salad & Diet?! For our hangout?! This option has been banned across Australia and Gaza! 🥗❌😂';
+        nextBtn.style.display = 'none';
+      } else if (food === 'shawarma') {
+        jokeBox.className = 'joke-box success';
+        jokeBox.innerHTML = 'Because Shawarma solves all world problems... <b>Double Shawarma with extra garlic sauce it is! 🌯🔥❤️</b>';
+        nextBtn.style.display = 'inline-flex';
+      }
+    }
+
+    const targetDate = new Date("2026-11-26T18:30:00+03:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      if (diff > 0) {
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = String(d).padStart(2, '0');
+        document.getElementById("hours").innerText = String(h).padStart(2, '0');
+        document.getElementById("minutes").innerText = String(m).padStart(2, '0');
+        document.getElementById("seconds").innerText = String(s).padStart(2, '0');
+      } else {
+        document.getElementById("days").innerText = "00";
+        document.getElementById("hours").innerText = "00";
+        document.getElementById("minutes").innerText = "00";
+        document.getElementById("seconds").innerText = "00";
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    function triggerLoveConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 80,
+          spread: 60,
+          origin: { y: 0.6 },
+          colors: ['#f43f5e', '#fb7185', '#fda4af', '#ffffff']
+        });
+        setTimeout(() => {
+          confetti({
+            particleCount: 50,
+     class="icon-badge">📍</div>
       <h2>Where are we heading?</h2>
       <p class="subtitle">Every option is on the table... kind of! 😅</p>
 
