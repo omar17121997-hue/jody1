@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Hey Jody, Quick Question… Think Carefully! 😉</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --primary: #f43f5e;
+      --primary-dark: #e11d48;
+      --accent: #fb7185;
+      --bg: #090d16;
+      --card-bg: rgba(19, 26, 43, 0.92);
+      --card-border: rgba(244, 63, 94, 0.25);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background: radial-gradient(circle at top center, #2e1065 0%, #0f172a 60%, #050811 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.25) 0%, transparent 70%);
+      filter: blur(50px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 30px 22px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(244, 63, 94, 0.15);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .icon-badge {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px auto;
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      box-shadow: 0 8px 20px rgba(244, 63, 94, 0.2);
+    }
+
+    h1, h2 {
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    h1 { font-size: 1.6rem; }
+    h2 { font-size: 1.45rem; }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 15px 20px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 18px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      color: #fff;
+      touch-action: manipulation;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+      box-shadow: 0 6px 20px rgba(244, 63, 94, 0.4);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+      box-shadow: 0 3px 12px rgba(244, 63, 94, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e2e8f0;
+    }
+
+    .btn-secondary:active {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+      font-size: 1.05rem;
+      margin-top: 10px;
+    }
+
+    .btn-whatsapp:active {
+      transform: scale(0.98);
+      box-shadow: 0 3px 12px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-map {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      margin-top: 10px;
+      padding: 12px 18px;
+    }
+
+    .btn-map:active {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .choice-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 15px 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .choice-card .card-icon {
+      font-size: 28px;
+    }
+
+    .choice-card .card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .choice-card:active {
+      transform: scale(0.96);
+    }
+
+    .choice-card.selected {
+      border-color: var(--primary);
+      background: rgba(244, 63, 94, 0.16);
+      box-shadow: 0 0 16px rgba(244, 63, 94, 0.3);
+    }
+
+    .joke-box {
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin: 16px 0;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .joke-box.warning {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1.5px dashed rgba(239, 68, 68, 0.6);
+      color: #fca5a5;
+    }
+
+    .joke-box.success {
+      background: rgba(34, 197, 94, 0.12);
+      border: 1.5px solid rgba(34, 197, 94, 0.6);
+      color: #86efac;
+    }
+
+    .info-summary-box {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 16px;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .info-item:last-child {
+      border-bottom: none;
+    }
+
+    .info-item-icon {
+      font-size: 20px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(244, 63, 94, 0.15);
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .info-item-text {
+      font-size: 0.92rem;
+      color: #e2e8f0;
+    }
+
+    .info-item-text b {
+      color: #fff;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 16px 0 20px;
+    }
+
+    .count-box {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 12px 6px;
+    }
+
+    .count-box span {
+      display: block;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--accent);
+      font-family: monospace, sans-serif;
+    }
+
+    .count-box label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Step 1: The Initial Question -->
+    <div id="step-1" class="step active">
+      <div class="icon-badge">🇦🇺</div>
+      <h1>Hey Jody, Quick Question…</h1>
+      <p class="subtitle">Think carefully! 😉 Take your time... but not too much, mate 😌</p>
+
+      <div style="position: relative; height: 65px; margin: 25px 0 10px;">
+        <button class="btn btn-primary" onclick="nextStep(2)" style="width: 48%; position: absolute; left: 0;">
+          Yes, totally! ❤️
+        </button>
+        <button id="no-btn" class="btn btn-secondary" onclick="handleNoClick()" onmouseover="handleNoClick()" style="width: 48%; position: absolute; right: 0;">
+          No 🙃
+        </button>
+      </div>
+
+      <div id="no-joke" class="joke-box warning" style="display: none;"></div>
+    </div>
+
+    <!-- Step 2: Time Selection -->
+    <div id="step-2" class="step">
+      <div class="icon-badge">⏰</div>
+      <h2>What time suits best?</h2>
+      <p class="subtitle">Pick the best hour for our hangout</p>
+
+      <div class="options-grid">
+        <div class="choice-card" onclick="pickTime(this, '5:00 PM')">
+          <div class="card-icon">☕</div>
+          <div class="card-title">5:00 PM (Arvo)</div>
+        </div>
+        <div class="choice-card selected" onclick="pickTime(this, '6:30 PM')">
+          <div class="card-icon">🌇</div>
+          <div class="card-title">6:30 PM ⭐</div>
+        </div>
+        <div class="choice-card" onclick="pickTime(this, '7:30 PM')">
+          <div class="card-icon">🌙</div>
+          <div class="card-title">7:30 PM</div>
+        </div>
+        <div class="choice-card" onclick="pickTime(this, '8:30 PM')">
+          <div class="card-icon">✨</div>
+          <div class="card-title">8:30 PM</div>
+        </div>
+      </div>
+
+      <div class="joke-box success" style="margin-bottom: 20px;">
+        Beauty! 6:30 PM it is ✅ Just chuck a sickie if you're on shift... I’ve already cleared my calendar 😎
+      </div>
+
+      <button class="btn btn-primary" onclick="nextStep(3)">
+        Next: Pick The Location 👉
+      </button>
+    </div>
+
+    <!-- Step 3: Location Selection (Australia vs North Gaza mandatory) -->
+    <div id="step-3" class="step">
+      <div class="icon-badge">📍</div>
+      <h2>Where are we heading?</h2>
+      <p class="subtitle">Every option is on the table... kind of! 😅</p>
+
+      <div class="options-grid">
+        <div class="choice-card" onclick="pickLocation(this, 'sydney')">
+          <div class="card-icon">🏖️</div>
+          <div class="card-title">Sydney, NSW</div>
+        </div>
+        <div class="choice-card" onclick="pickLocation(this, 'melbourne')">
+          <div class="card-icon">☕</div>
+          <div class="card-title">Melbourne, VIC</div>
+        </div>
+        <div class="choice-card" onclick="pickLocation(this, 'outback')">
+          <div class="card-icon">🦘</div>
+          <div class="card-title">The Outback</div>
+        </div>
+        <div class="choice-card" id="card-north" onclick="pickLocation(this, 'north')">
+          <div class="card-icon">🎯</div>
+          <div class="card-title">North Gaza</div>
+        </div>
+      </div>
+
+      <div id="place-joke-box" style="display: none;"></div>
+
+      <button id="step3-btn" class="btn btn-primary" style="display: none; margin-top: 15px;" onclick="nextStep(4)">
+        Next: The Food Menu 👉
+      </button>
+    </div>
+
+    <!-- Step 4: Food Selection (Shawarma mandatory) -->
+    <div id="step-4" class="step">
+      <div class="icon-badge">🌯</div>
+      <h2>What are we eating?</h2>
+      <p class="subtitle">A fair dinkum democratic choice... see what you pick 😋</p>
+
+      <div class="options-grid">
+        <div class="choice-card" onclick="pickFood(this, 'pie')">
+          <div class="card-icon">🥧</div>
+          <div class="card-title">Aussie Meat Pie</div>
+        </div>
+        <div class="choice-card" onclick="pickFood(this, 'vegemite')">
+          <div class="card-icon">🍞</div>
+          <div class="card-title">Vegemite Toast</div>
+        </div>
+        <div class="choice-card" onclick="pickFood(this, 'diet')">
+          <div class="card-icon">🥗</div>
+          <div class="card-title">Salad & Diet</div>
+        </div>
+        <div class="choice-card" id="card-shawarma" onclick="pickFood(this, 'shawarma')">
+          <div class="card-icon">🌯</div>
+          <div class="card-title">Double Shawarma 🔥</div>
+        </div>
+      </div>
+
+      <div id="food-joke-box" style="display: none;"></div>
+
+      <button id="step4-btn" class="btn btn-primary" style="display: none; margin-top: 15px;" onclick="nextStep(5)">
+        Lock In The Hangout 🎉
+      </button>
+    </div>
+
+    <!-- Step 5: Summary, Countdown & WhatsApp -->
+    <div id="step-5" class="step">
+      <div class="icon-badge">🎉</div>
+      <h2>It's Officially Official!</h2>
+      <p class="subtitle" style="color: #fb7185; font-weight: 700; font-size: 1.1rem; margin-bottom: 18px;">
+        «Looking forward to catching up, Jody! ❤️»
+      </p>
+
+      <div class="info-summary-box">
+        <div class="info-item">
+          <div class="info-item-icon">📅</div>
+          <div class="info-item-text"><b>Date & Time:</b> Thursday, Nov 26 - 6:30 PM</div>
+        </div>
+        <div class="info-item">
+          <div class="info-item-icon">📍</div>
+          <div class="info-item-text"><b>Location:</b> Al-Shamal Restaurant (North Gaza)</div>
+        </div>
+        <div class="info-item">
+          <div class="info-item-icon">🌯</div>
+          <div class="info-item-text"><b>The Feed:</b> Legendary Double Shawarma with extra garlic sauce! 😋</div>
+        </div>
+      </div>
+
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px;">Countdown to our hangout ⏳</p>
+      <div class="countdown-grid">
+        <div class="count-box"><span id="days">00</span><label>Days</label></div>
+        <div class="count-box"><span id="hours">00</span><label>Hours</label></div>
+        <div class="count-box"><span id="minutes">00</span><label>Mins</label></div>
+        <div class="count-box"><span id="seconds">00</span><label>Secs</label></div>
+      </div>
+
+      <!-- WhatsApp Button -->
+      <a href="https://wa.me/970598011080?text=Hey%20Omar%21%20Deal%20is%20officially%20sealed%21%20Count%20me%20in%20for%20our%20hangout%20and%20that%20legendary%20Shawarma%20in%20North%20Gaza%21%20%F0%9F%8C%AF%E2%9D%A4%EF%B8%8F%F0%9F%87%A6%F0%9F%87%BA" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+        💬 Confirm with Omar on WhatsApp ❤️
+      </a>
+
+      <!-- Map Button -->
+      <a href="https://maps.app.goo.gl/8KeZAsqBZN2zq54N8" target="_blank" rel="noopener noreferrer" class="btn btn-map">
+        🗺️ View Al-Shamal Restaurant on Google Maps
+      </a>
+
+      <p style="margin-top: 20px; color: #f43f5e; font-weight: 800; font-size: 1.05rem;">
+        See you soon, Jody! — Omar ✨
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    function nextStep(stepNum) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById('step-' + stepNum);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      if (stepNum === 5) {
+        triggerLoveConfetti();
+      }
+    }
+
+    // Runaway "No" button with Aussie banter
+    let noCount = 0;
+    const noMessages = [
+      "The button is running away, not me! 🏃‍♂️",
+      "Fair dinkum, you know you can't say no! 🇦🇺",
+      "Crikey! The button just resigned 🙃",
+      "Nice try, mate! Resistance is completely futile 😉"
+    ];
+    function handleNoClick() {
+      const btn = document.getElementById('no-btn');
+      const box = document.getElementById('no-joke');
+      const randomX = Math.floor(Math.random() * 160) - 80;
+      const randomY = Math.floor(Math.random() * 100) - 50;
+      btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+      box.style.display = 'block';
+      box.innerText = noMessages[noCount % noMessages.length];
+      noCount++;
+    }
+
+    function pickTime(card, time) {
+      document.querySelectorAll('#step-2 .choice-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+    }
+
+    // Step 3 Location logic (Aussie locations vs North Gaza)
+    function pickLocation(card, loc) {
+      const jokeBox = document.getElementById('place-joke-box');
+      const nextBtn = document.getElementById('step3-btn');
+      document.querySelectorAll('#step-3 .choice-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      jokeBox.style.display = 'block';
+
+      if (loc === 'sydney') {
+        jokeBox.className = 'joke-box warning';
+        jokeBox.innerHTML = 'Sydney? Bondi traffic is a nightmare and parking costs an arm and a leg! 🚗❌ Pick somewhere better, mate.';
+        nextBtn.style.display = 'none';
+      } else if (loc === 'melbourne') {
+        jokeBox.className = 'joke-box warning';
+        jokeBox.innerHTML = 'Melbourne? It will rain, hail, and be sunny all in 5 minutes! 🌧️❌ Let’s head somewhere warmer.';
+        nextBtn.style.display = 'none';
+      } else if (loc === 'outback') {
+        jokeBox.className = 'joke-box warning';
+        jokeBox.innerHTML = 'The Outback? Way too many giant spiders, snakes, and heat waves! 🕷️❌ Try again.';
+        nextBtn.style.display = 'none';
+      } else if (loc === 'north') {
+        jokeBox.className = 'joke-box success';
+        jokeBox.innerHTML = 'And because we believe in 100% fair dinkum democracy... the destination has been chosen: <b>North Gaza (Al-Shamal Restaurant)! 🍽️✨</b>';
+        nextBtn.style.display = 'inline-flex';
+      }
+    }
+
+    // Step 4 Food logic (Aussie food vs Shawarma)
+    function pickFood(card, food) {
+      const jokeBox = document.getElementById('food-joke-box');
+      const nextBtn = document.getElementById('step4-btn');
+      document.querySelectorAll('#step-4 .choice-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      jokeBox.style.display = 'block';
+
+      if (food === 'pie') {
+        jokeBox.className = 'joke-box warning';
+        jokeBox.innerHTML = 'Aussie Meat Pie? Good for the footy, but we deserve a real feast today! 🥧❌';
+        nextBtn.style.display = 'none';
+      } else if (food === 'vegemite') {
+        jokeBox.className = 'joke-box warning';
+        jokeBox.innerHTML = 'Vegemite on toast?! Mate, that is strictly for breakfast! 🍞❌ Let’s get real food.';
+        nextBtn.style.display = 'none';
+      } else if (food === 'diet') {
+        jokeBox.className = 'joke-box warning';
+        jokeBox.innerHTML = 'Salad & Diet?! For our hangout?! This option has been banned across Australia and Gaza! 🥗❌😂';
+        nextBtn.style.display = 'none';
+      } else if (food === 'shawarma') {
+        jokeBox.className = 'joke-box success';
+        jokeBox.innerHTML = 'Because Shawarma solves all world problems... <b>Double Shawarma with extra garlic sauce it is! 🌯🔥❤️</b>';
+        nextBtn.style.display = 'inline-flex';
+      }
+    }
+
+    // Target countdown
+    const targetDate = new Date("2026-11-26T18:30:00+03:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      if (diff > 0) {
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = String(d).padStart(2, '0');
+        document.getElementById("hours").innerText = String(h).padStart(2, '0');
+        document.getElementById("minutes").innerText = String(m).padStart(2, '0');
+        document.getElementById("seconds").innerText = String(s).padStart(2, '0');
+      } else {
+        document.getElementById("days").innerText = "00";
+        document.getElementById("hours").innerText = "00";
+        document.getElementById("minutes").innerText = "00";
+        document.getElementById("seconds").innerText = "00";
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    function triggerLoveConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 80,
+          spread: 60,
+          origin: { y: 0.6 },
+          colors: ['#f43f5e', '#fb7185', '#fda4af', '#ffffff']
+        });
+        setTimeout(() => {
+          confetti({
+            particleCount: 50,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 }
+          });
+          confetti({
+            particleCount: 50,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 }
+          });
+        }, 300);
+      }
+    }
+  </script>
+</body>
+</html>
